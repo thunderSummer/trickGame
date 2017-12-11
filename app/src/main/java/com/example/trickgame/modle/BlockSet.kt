@@ -21,60 +21,60 @@ import com.example.trickgame.util.yNum
         LINE,STONE,DISLOCATION1,DISLOCATION2,CORNER1,CORNER2,OTHER
     }
     val blockList = arrayListOf<Block>()
-    constructor(type: BlockSetType,  values:IntArray) : this(type) {
-
+    constructor(type: BlockSetType,  values:IntArray,valueType: IntArray) : this(type) {
         when(type){
-            BlockSetType.LINE ->line(values)
-            BlockSetType.DISLOCATION1 ->dislocation1(values)
-            BlockSetType.DISLOCATION2 ->dislocation2(values)
-            BlockSetType.STONE ->stone(values)
-            BlockSetType.CORNER1 ->cover1(values)
-            BlockSetType.CORNER2 ->cover2(values)
-            BlockSetType.OTHER ->other(values)
+            BlockSetType.LINE ->line(values,valueType)
+            BlockSetType.DISLOCATION1 ->dislocation1(values,valueType)
+            BlockSetType.DISLOCATION2 ->dislocation2(values,valueType)
+            BlockSetType.STONE ->stone(values,valueType)
+            BlockSetType.CORNER1 ->cover1(values,valueType)
+            BlockSetType.CORNER2 ->cover2(values,valueType)
+            BlockSetType.OTHER ->other(values,valueType)
         }
     }
-    private fun line(values: IntArray){
-        blockList.add(Block(xNum / 2 - 2, 0, values[0], Block.BlockType.Red, false))
-        blockList.add(Block(xNum / 2 - 1, 0, values[1], Block.BlockType.Red, true))
-        blockList.add(Block(xNum / 2, 0, values[2], Block.BlockType.Red, false))
-        blockList.add(Block(xNum / 2 + 1, 0, values[1], Block.BlockType.Red, false))
-
+    private fun line(values: IntArray,type:IntArray){
+        blockList.apply {
+            add(Block(xNum / 2 - 2, 0, values[0], type [0], false))
+            add(Block(xNum / 2 - 1, 0, values[1], type[1], true))
+            add(Block(xNum / 2, 0, values[2], type[2], false))
+            add(Block(xNum / 2 + 1, 0, values[3],type[3], false))
+        }
     }
-    private fun stone(values: IntArray){
-        blockList.add(Block(xNum / 2 - 1, 0, values[0], Block.BlockType.Red, false))
-        blockList.add(Block(xNum / 2 , 0, values[1], Block.BlockType.Red, false))
-        blockList.add(Block(xNum / 2 - 1, 1, values[2], Block.BlockType.Red, false))
-        blockList.add(Block(xNum / 2 , 1, values[3], Block.BlockType.Red, false))
+    private fun stone(values: IntArray,type:IntArray){
+        blockList.add(Block(xNum / 2 - 1, 0, values[0],type[0] , false))
+        blockList.add(Block(xNum / 2 , 0, values[1],type[1], false))
+        blockList.add(Block(xNum / 2 - 1, 1, values[2], type[2], false))
+        blockList.add(Block(xNum / 2 , 1, values[3], type[3], false))
     }
-    private fun dislocation1(values: IntArray){
-        blockList.add(Block(xNum / 2 - 1, 0, values[0], Block.BlockType.Red, false))
-        blockList.add(Block(xNum / 2 - 1, 1, values[1], Block.BlockType.Red, true))
-        blockList.add(Block(xNum / 2 , 1, values[2], Block.BlockType.Red, false))
-        blockList.add(Block(xNum / 2 , 2, values[3], Block.BlockType.Red, false))
+    private fun dislocation1(values: IntArray,type:IntArray){
+        blockList.add(Block(xNum / 2 - 1, 0, values[0], type[0], false))
+        blockList.add(Block(xNum / 2 - 1, 1, values[1], type[1], true))
+        blockList.add(Block(xNum / 2 , 1, values[2],type[2], false))
+        blockList.add(Block(xNum / 2 , 2, values[3], type[3], false))
     }
-    private fun dislocation2(values: IntArray){
-        blockList.add(Block(xNum / 2 , 0, values[0], Block.BlockType.Red, false))
-        blockList.add(Block(xNum / 2 , 1, values[1], Block.BlockType.Red, true))
-        blockList.add(Block(xNum / 2 - 1, 1, values[2], Block.BlockType.Red, false))
-        blockList.add(Block(xNum / 2 - 1, 2, values[3], Block.BlockType.Red, false))
+    private fun dislocation2(values: IntArray,type:IntArray){
+        blockList.add(Block(xNum / 2 , 0, values[0], type[0], false))
+        blockList.add(Block(xNum / 2 , 1, values[1], type[1], true))
+        blockList.add(Block(xNum / 2 - 1, 1, values[2], type[2], false))
+        blockList.add(Block(xNum / 2 - 1, 2, values[3], type[3], false))
     }
-    private fun cover1(values: IntArray){
-        blockList.add(Block(xNum / 2 - 1, 0, values[0], Block.BlockType.Red, false))
-        blockList.add(Block(xNum / 2 - 1, 1, values[1], Block.BlockType.Red, false))
-        blockList.add(Block(xNum / 2, 1, values[2], Block.BlockType.Red, true))
-        blockList.add(Block(xNum / 2 + 1, 1, values[3], Block.BlockType.Red, false))
+    private fun cover1(values: IntArray,type:IntArray){
+        blockList.add(Block(xNum / 2 - 1, 0, values[0], type[0], false))
+        blockList.add(Block(xNum / 2 - 1, 1, values[1], type[1], false))
+        blockList.add(Block(xNum / 2, 1, values[2],type[2], true))
+        blockList.add(Block(xNum / 2 + 1, 1, values[3], type[3], false))
     }
-    private fun cover2(values: IntArray){
-        blockList.add(Block(xNum / 2 , 0, values[0], Block.BlockType.Red, false))
-        blockList.add(Block(xNum / 2 - 2, 1, values[1], Block.BlockType.Red, false))
-        blockList.add(Block(xNum / 2 - 1, 1, values[2], Block.BlockType.Red, true))
-        blockList.add(Block(xNum / 2, 1, values[3], Block.BlockType.Red, false))
+    private fun cover2(values: IntArray,type:IntArray){
+        blockList.add(Block(xNum / 2 , 0, values[0], type[0], false))
+        blockList.add(Block(xNum / 2 - 2, 1, values[1], type[1], false))
+        blockList.add(Block(xNum / 2 - 1, 1, values[2], type[2], true))
+        blockList.add(Block(xNum / 2, 1, values[3], type[3], false))
     }
-    private fun other(values: IntArray){
-        blockList.add(Block(xNum / 2 - 2, 0, values[1], Block.BlockType.Red, false))
-        blockList.add(Block(xNum / 2 - 1, 0, values[2], Block.BlockType.Red, true))
-        blockList.add(Block(xNum / 2 , 0, values[3], Block.BlockType.Red, false))
-        blockList.add(Block(xNum / 2 - 1, 1, values[0], Block.BlockType.Red, false))
+    private fun other(values: IntArray,type:IntArray){
+        blockList.add(Block(xNum / 2 - 2, 0, values[1], type[0], false))
+        blockList.add(Block(xNum / 2 - 1, 0, values[2], type[1], true))
+        blockList.add(Block(xNum / 2 , 0, values[3], type[2], false))
+        blockList.add(Block(xNum / 2 - 1, 1, values[0],type[3], false))
 
     }
     fun rotate():Boolean{

@@ -6,8 +6,10 @@ import com.example.trickgame.util.yNum
 
 /**
  * Created by thunder on 17-12-1.
+ *
  */
 object Grid {
+    var score=0
     val gridMap = Array(xNum){(Array<Block?>(yNum){ null})}
     fun addBlock(block: Block){
         block.active=false
@@ -26,36 +28,36 @@ object Grid {
         if(block.y-1>=0){
             blockC = gridMap[block.x][block.y-1]
             if(blockC!=null&&blockC.value==block.value){
+                scoreINC(blockC.value)
                 blockC.value*=2
                 blockC.active=true
-
                 return true
             }
         }
         if(block.y+1<= yNum -1){
             blockC = gridMap[block.x][block.y+1]
             if(blockC!=null&&blockC.value==block.value){
+                scoreINC(blockC.value)
                 blockC.value*=2
                 blockC.active=true
-
                 return true
             }
         }
         if (block.x-1>=0){
             blockC = gridMap[block.x-1][block.y]
             if(blockC!=null&&blockC.value==block.value){
+                scoreINC(blockC.value)
                 blockC.value*=2
                 blockC.active=true
-
                 return true
             }
         }
         if (block.x+1<= xNum -1){
             blockC = gridMap[block.x+1][block.y]
             if(blockC!=null&&blockC.value==block.value){
+                scoreINC(blockC.value)
                 blockC.value*=2
                 blockC.active=true
-
                 return true
             }
         }
@@ -67,7 +69,7 @@ object Grid {
             var canBreak=true
             for (i in 0 until xNum){
                 for (j in 0 until yNum){
-                    var block = gridMap[i][j]
+                    val block = gridMap[i][j]
                     if (block!=null&& block.active){
                         if (!check(block)){
                             block.active=false
@@ -97,12 +99,7 @@ object Grid {
                     }
                     var canNextMove = false
                     if (k!=0){
-                        canNextMove=true
-                        for (l in i until i+k){
-                            if (gridMap[l][j+1]!=null){
-                                canNextMove=false
-                            }
-                        }
+                        canNextMove= (i until i+k).none { gridMap[it][j+1]!=null }
                     }
                     if (canNextMove){
                         var min =1
@@ -126,6 +123,8 @@ object Grid {
 
                         for (l in i until i+k){
                             gridMap[l][j+min-1]= gridMap[l][j]
+                            gridMap[l][j+min-1]!!.x= l
+                            gridMap[l][j+min-1]!!.y=j+min-1
                             gridMap[l][j+min-1]!!.active=true
                             isFinish=false
                             gridMap[l][j]=null
@@ -142,4 +141,31 @@ object Grid {
     fun canRight(block: Block)= (block.x< xNum -1 && gridMap[block.x+1][block.y]==null)
     fun canLeft(block: Block) =(block.x>0&& gridMap[block.x-1][block.y]==null)
     fun canDown(block: Block)=(block.y< yNum -1&& gridMap[block.x][block.y+1]==null)
+    fun win() :Boolean{
+        for (i in 0 until xNum){
+            for (j in 0 until yNum){
+                val temp = gridMap[i][j]?:continue
+                    if (temp.value>=1024){
+                        return true
+                    }
+            }
+        }
+        return false
+    }
+    private fun scoreINC( value: Int) {
+        var temp = value
+        score++
+        while (temp != 1) {
+            temp /= 2
+            score ++
+
+        }
+    }
+    fun clear(){
+        score=0
+        for (i in 0 until xNum)
+            (0 until yNum).forEach {
+                gridMap[i][it]=null
+            }
+    }
 }

@@ -4,11 +4,60 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/bacground"
     tools:context="com.example.trickgame.MainActivity">
 
-<FrameLayout
-    android:id="@+id/gameContainer"
+<LinearLayout
     android:layout_width="match_parent"
-    android:layout_height="match_parent"/>
+    android:layout_weight="1"
+    android:layout_height="0dp">
+<com.example.trickgame.view.GameView
+    android:id="@+id/game_view"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content" />
+</LinearLayout>
+<LinearLayout
+    android:background="@drawable/bottom"
+    android:layout_width="match_parent"
+    android:orientation="horizontal"
 
+    android:paddingTop="0dp"
+    android:layout_height="50dp">
+    <ImageView
+        android:layout_gravity="center"
+        android:id="@+id/start_stop_btn"
+        android:src="@drawable/pause"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <LinearLayout
+        android:layout_marginLeft="20dp"
+        android:layout_gravity="center"
+        android:background="@drawable/score"
+        android:orientation="vertical"
+        android:layout_weight="1"
+        android:layout_width="wrap_content"
+        android:layout_marginRight="20dp"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/score"
+            android:layout_width="match_parent"
+            android:layout_height="33dp"
+            android:gravity="center"
+            android:text="0"
+            android:textSize="16sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_gravity="center"
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <ImageView
+
+            android:src="@drawable/other"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+</LinearLayout>
 </LinearLayout>
